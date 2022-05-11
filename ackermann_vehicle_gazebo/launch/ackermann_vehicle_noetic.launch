@@ -73,4 +73,20 @@ limitations under the License.
       <rosparam file="$(find ackermann_vehicle_gazebo)/config/em_3905_ackermann_ctrlr_params.yaml" command="load"/>
     </node>
   </group>
+
+  <!-- converts cmd_vel to ackermann commands -->
+  <node pkg="ackermann_vehicle_navigation" type="cmd_vel_to_ackermann_drive.py" name="cmd_vel_to_ackermann" output="screen">
+  </node>
+
+  <!-- Launch joy node -->
+  <node pkg="joy" type="joy_node" name="joy">
+    <param name="deadzone" value="0.2" />
+    <param name="autorepeat_rate" value="50" />
+  </node>
+
+  <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_node">
+    <param name="enable_button" value="4" /> <!-- enable - LB (may need to change with TCP controler code)-->
+    <param name="axis_angular " value="3" /> <!-- steering - right joystick +left / -right -->
+  </node>
+
 </launch>
